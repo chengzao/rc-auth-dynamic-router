@@ -1,33 +1,49 @@
-import React, { useState } from "react";
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  createContext,
+} from "react";
 
-interface initStateProps {
+interface AppState {
   menus: any[];
   user: any;
-  setUser: (...args: any[]) => void;
-  setMenus: (...args: any[]) => void;
 }
 
-const initState: initStateProps = {
+interface AppContextProps extends AppState {
+  setUser: Dispatch<SetStateAction<any>>;
+  setMenus: Dispatch<SetStateAction<any[]>>;
+}
+
+const initState: AppState = {
   menus: [],
   user: {},
-  setUser: () => {},
-  setMenus: () => {},
 };
 
-export const AppContext = React.createContext<initStateProps>(initState);
+const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-export const AppProvider = (props: any) => {
-  const value = props.value || {};
+interface AppProviderProps {
+  children: React.ReactNode;
+  value?: Partial<AppState>;
+}
+
+export const AppProvider: React.FC<AppProviderProps> = ({
+  children,
+  value = {},
+}) => {
   const state = { ...initState, ...value };
   const [user, setUser] = useState(state.user || {});
   const [menus, setMenus] = useState(state.menus || []);
 
+  const contextValue = {
+    user,
+    menus,
+    setUser,
+    setMenus,
+  };
+
   return (
-    <AppContext.Provider
-      value={{ ...initState, user, menus, setUser, setMenus }}
-    >
-      {props.children}
-    </AppContext.Provider>
+    <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>
   );
 };
 
