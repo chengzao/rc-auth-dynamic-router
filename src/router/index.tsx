@@ -77,6 +77,10 @@ const authRouterMaps: CustomRouteObject[] = [
 ]
 
 
+export const gotoLogin = () => {
+  router.navigate('/login')
+}
+
 export const filterRoutes = (menus: CustomObject[]) => {
   return authRouterMaps.filter(route => {
     const menu = menus.find(menu => menu.roleItemKey === route.roleItemKey)
@@ -87,5 +91,11 @@ export const filterRoutes = (menus: CustomObject[]) => {
 export const addRoutes = (router: any, menus: CustomObject[]) => {
   const children = filterRoutes(menus)
   // console.log('children', children)
-  router.routes[1].children = children
+  router.routes[1].children = [
+    ...children, 
+    {
+      path: '*',
+      Component: NotFound,
+    }
+  ]
 }

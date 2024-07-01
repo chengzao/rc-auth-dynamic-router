@@ -27,7 +27,6 @@ const Login = () => {
     <div>
       <h1>login</h1>
       <input type="text" value={name} onChange={e => setName(e.target.value)} />
-      <input type="password" />
       <button onClick={handleSubmit}>登录</button>
     </div>
   )

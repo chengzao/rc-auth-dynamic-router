@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { getUserInfo } from '@/services/user';
 import { useAppContext } from '@/app-context';
-import { addRoutes, filterRoutes, router } from './router';
+import { addRoutes, filterRoutes, gotoLogin, router } from './router';
 
 export function App() {
   const [loading, setLoading] = useState(true);
@@ -10,6 +10,13 @@ export function App() {
   const token = localStorage.getItem('token');
 
   const fetchData = () => {
+
+    if(!token) {
+      setLoading(false);
+      gotoLogin();
+      return
+    }
+
     getUserInfo().then((res: any) => {
       const data = res.data.data || []
       const menus  = filterRoutes(data);
