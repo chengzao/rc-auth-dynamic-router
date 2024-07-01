@@ -6,11 +6,7 @@ import LoginLayout from '@/layout/LoginLayout'
 import NotFound from '@/components/NotFound'
 import Login from '@/pages/login/index';
 
-// import Page1 from '@/pages/page1';
-// import Page2 from '@/pages/page2';
-// import Page3 from '@/pages/page3';
 import { lazy } from 'react';
-// import { lazy } from 'react';
 
 type CustomObject = {
   roleItemKey?: string

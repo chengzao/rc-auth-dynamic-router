@@ -10,8 +10,6 @@ const Login = () => {
   const navigate = useNavigate()
   
   const handleSubmit = async () => {
-    console.log(name);
-
     fetchLogin(name).then((res: any) => {
       console.log('res', res)
       localStorage.setItem('token', res.data.token)

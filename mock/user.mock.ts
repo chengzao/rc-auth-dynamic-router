@@ -5,7 +5,6 @@ export default defineMock({
   url: '/api/user',
   method: ['GET'],
   body(request) {
-    // const { name } = request.body
     const token = request.headers['authorization']
     console.log('token', token)
 
@@ -21,21 +20,15 @@ export default defineMock({
         data: [
           {
             name: 'page1',
-            route: '/dashboard/page1',
             roleItemKey: 'dashboard:page1',
-            filePath: '/page1/index.tsx',
           },
           {
             name: 'page2',
-            route: '/dashboard/page2',
             roleItemKey: 'dashboard:page2',
-            filePath: '/page2/index.tsx',
           },
           {
             name: 'page3',
-            route: '/dashboard/page3',
             roleItemKey: 'dashboard:page3',
-            filePath: '/page3/index.tsx',
           },
         ]
       }
@@ -45,9 +38,7 @@ export default defineMock({
       data: [
         {
           name: 'page1',
-          route: '/dashboard/page1',
           roleItemKey: 'dashboard:page1',
-          filePath: '/page1/index.tsx',
         },
       ]
     }
