@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
+import { AppProvider } from '@/app-context';
 import './index.css'
 
 import NProgress from 'nprogress';
@@ -12,7 +13,7 @@ NProgress.configure({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <React.StrictMode>
+  <AppProvider>
     <App />
-  // </React.StrictMode>,
+  </AppProvider>,
 )

@@ -1,18 +1,21 @@
-import { fetchList } from "@/service";
-import { useEffect } from "react";
+import { fetchList } from "@/services/user";
+import { useEffect, useState } from "react";
 
 function Page1() {
+
+  const [title, setTitle] = useState('')
+
   useEffect(() => {
-    console.log('page1')
     fetchList().then((res: any) => {
       console.log(res)
+      setTitle(res.data.data)
     })
   }, [])
 
 
   return (
     <div>
-      page1
+      page1 - {title}
     </div>
   )
 }

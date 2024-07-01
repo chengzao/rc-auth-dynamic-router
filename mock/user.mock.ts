@@ -7,6 +7,7 @@ export default defineMock({
   body(request) {
     // const { name } = request.body
     const token = request.headers['authorization']
+    console.log('token', token)
 
     if(!token) {
       return {

@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Link, Outlet } from 'react-router-dom';
-import { useAppContext } from './app-context';
-import { Loading } from './loading';
+import { useAppContext } from '@/app-context';
+import { Loading } from '@/components/Loading';
 
 function Layout() {
   const { menus, user } = useAppContext();

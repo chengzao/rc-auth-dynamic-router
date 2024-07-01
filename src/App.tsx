@@ -1,12 +1,13 @@
-import { createBrowserRouter, redirect, RouterProvider } from 'react-router-dom'
-import NotFound from './NotFound'
-import Layout from './Layout'
-import BaseLayout from './BaseLayout'
 import { lazy, useEffect, useState } from 'react'
-import { getUserInfo } from './service';
-import { AppProvider } from './app-context';
+import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom'
+import { getUserInfo } from '@/services/user';
+import { useAppContext } from '@/app-context';
 
-import Login from './pages/login/index';
+import NotFound from '@/components/NotFound'
+import MainLayout from '@/layout/MainLayout'
+import LoginLayout from '@/layout/LoginLayout'
+import Login from '@/pages/login/index';
+
 
 const modules = import.meta.glob('./pages/*/index.tsx');
 const components = Object.keys(modules).reduce<Record<string, any>>((prev, cur) => {
@@ -14,11 +15,10 @@ const components = Object.keys(modules).reduce<Record<string, any>>((prev, cur) 
   return prev;
 }, {}) as any;
 
-
-export const router = createBrowserRouter([
+export const router: ReturnType<typeof createBrowserRouter> = createBrowserRouter([
   {
     path: '/',
-    Component: BaseLayout,
+    Component: LoginLayout,
     children: [
       {
         path: '',
@@ -34,7 +34,7 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    Component: Layout,
+    Component: MainLayout,
     children: [
       {
         path: '',
@@ -48,25 +48,19 @@ export const router = createBrowserRouter([
   }
 ]);
 
-
-function App() {
-  const [menus, setMenus] = useState<any[]>([]);
+export function App() {
   const [loading, setLoading] = useState(true);
+  const { setMenus } = useAppContext();
+  const token = localStorage.getItem('token');
+  console.log('token', token)
 
   const fetchData = () => {
-
-    const token = localStorage.getItem('token');
-    if(!token) {
-      setLoading(false);
-      return;
-    }
-
     getUserInfo().then((res: any) => {
-      const menus = res.data || []
+      const menus = res.data.data || []
   
       setMenus(menus);
       setLoading(false);
-  
+
       // 获取菜单后动态添加路由
       router.routes[1].children = menus.map((menu: any) => ({
         path: menu.route,
@@ -80,7 +74,7 @@ function App() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [token]);
 
   if (loading) {
     return (
@@ -89,9 +83,7 @@ function App() {
   }
 
   return (
-    <AppProvider value={{ menus }}>
-      <RouterProvider router={router} />
-    </AppProvider>
+    <RouterProvider router={router} />
   )
 }
 

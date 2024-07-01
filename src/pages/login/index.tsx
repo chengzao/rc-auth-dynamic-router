@@ -1,27 +1,27 @@
 import { useAppContext } from '@/app-context';
-import { fetchLogin } from '@/service';
+import { fetchLogin } from '@/services/user';
 import React, { useState } from 'react'
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
   const [name, setName] = useState('')
+  const { setUser } = useAppContext()
 
-  const { setState } = useAppContext()
-
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   
   const handleSubmit = async () => {
     console.log(name);
 
-    setState((pre: any) => ({ ...pre, user: { name } }))
-
-    fetchLogin(name).then((data: any) => {
-      console.log(data);
-      localStorage.setItem('token', data.token)
-      // navigate('/dashboard/page1', { replace: true })
-      location.href = '/dashboard'
-    }).catch((err) => {
+    fetchLogin(name).then((res: any) => {
+      console.log('res', res)
+      localStorage.setItem('token', res.data.token)
+      // location.href = '/dashboard'
+    })
+    .then(() => {
+      setUser((pre: any) => ({...pre, user:{name}}))
+      navigate('/dashboard/page1', { replace: true })
+    })
+    .catch((err) => {
       console.log('fetch error', err)
     })
   }
