@@ -1,18 +1,28 @@
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAppContext } from '@/app-context';
 import { Loading } from '@/components/Loading';
-import { Button } from 'antd';
+import { Modal } from 'antd';
 
 import styles from '@/layout.module.less'
 
 function Layout() {
   const { menus } = useAppContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const logout = () => {
+    setIsModalOpen(true);
+  }
+
+  const handleOk = () => {
+    setIsModalOpen(false);
     localStorage.removeItem('token');
     window.location.reload();
-  }
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className={styles.layout}>
@@ -24,7 +34,7 @@ function Layout() {
           ))}
         </ul>
         <div className={styles.footer}>
-          <Button type='link' onClick={logout}>logout</Button>
+          <div className={styles.logout} onClick={logout}>logout</div>
         </div>
       </nav>
       <main className={styles.main}>
@@ -32,6 +42,13 @@ function Layout() {
           <Outlet />
         </Suspense>
       </main>
+      <Modal title="退出" 
+        open={isModalOpen} 
+        onOk={handleOk} 
+        onCancel={handleClose}
+      >
+        <p>请确认是否要退出登录?</p>
+      </Modal>
     </div>
   )
 }
