@@ -49,29 +49,30 @@ const Login = () => {
       <div className={styles.form}>
         <Form
           name="basic"
-          labelCol={{ flex: '126px' }}
-          style={{width: 500}}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          style={{ width: 500 }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item
+          <Form.Item<FieldType>
             label="Username"
             name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
-            <Input size="large" style={{ width: 300}} />
+            <Input size="large" />
           </Form.Item>
 
-          <Form.Item
+          <Form.Item<FieldType>
             label="Password"
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password size="large" style={{ width: 300}} />
+            <Input.Password size="large"/>
           </Form.Item>
 
-          <Form.Item wrapperCol={{ offset: 6 }}>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button type="primary" size="large" htmlType="submit">
               Submit
             </Button>

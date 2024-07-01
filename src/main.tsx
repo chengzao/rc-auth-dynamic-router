@@ -15,7 +15,7 @@ NProgress.configure({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ConfigProvider theme={{ cssVar: true }}>
+  <ConfigProvider>
     <AppProvider>
       <App />
     </AppProvider>
