@@ -1,10 +1,10 @@
-import { Suspense, useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
-import { useAppContext } from '@/app-context';
-import { Loading } from '@/components/Loading';
-import { Modal } from 'antd';
+import { Suspense, useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
+import { useAppContext } from "@/app-context";
+import { Loading } from "@/components/NProgress";
+import { Modal } from "antd";
 
-import styles from '@/layout.module.less'
+import styles from "@/layout.module.less";
 
 function Layout() {
   const { menus } = useAppContext();
@@ -12,11 +12,11 @@ function Layout() {
 
   const logout = () => {
     setIsModalOpen(true);
-  }
+  };
 
   const handleOk = () => {
     setIsModalOpen(false);
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     window.location.reload();
   };
 
@@ -30,11 +30,20 @@ function Layout() {
         <h1 className={styles.header}>KMS DashBoard</h1>
         <ul className={styles.container}>
           {menus.map((menu, index) => (
-            <li key={index}><NavLink to={menu.path} className={({ isActive }) => isActive ? styles.active : ''}>{menu.name}</NavLink></li>
+            <li key={index}>
+              <NavLink
+                to={menu.path}
+                className={({ isActive }) => (isActive ? styles.active : "")}
+              >
+                {menu.name}
+              </NavLink>
+            </li>
           ))}
         </ul>
         <div className={styles.footer}>
-          <div className={styles.logout} onClick={logout}>logout</div>
+          <div className={styles.logout} onClick={logout}>
+            logout
+          </div>
         </div>
       </nav>
       <main className={styles.main}>
@@ -42,15 +51,16 @@ function Layout() {
           <Outlet />
         </Suspense>
       </main>
-      <Modal title="退出" 
-        open={isModalOpen} 
-        onOk={handleOk} 
+      <Modal
+        title="退出"
+        open={isModalOpen}
+        onOk={handleOk}
         onCancel={handleClose}
       >
         <p>请确认是否要退出登录?</p>
       </Modal>
     </div>
-  )
+  );
 }
 
 export default Layout;
