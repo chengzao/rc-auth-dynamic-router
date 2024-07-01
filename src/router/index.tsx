@@ -10,6 +10,7 @@ import { lazy } from 'react';
 
 type CustomObject = {
   roleItemKey?: string
+  name?: string
 }
 
 type CustomRouteObject = CustomObject & RouteObject
@@ -58,31 +59,33 @@ const authRouterMaps: CustomRouteObject[] = [
   {
     path: '/dashboard/page1',
     roleItemKey: 'dashboard:page1',
+    name: 'page1',
     Component: lazy(() => import('@/pages/page1'))
   },
   {
     path: '/dashboard/page2',
     roleItemKey: 'dashboard:page2',
+    name: 'page2',
     Component: lazy(() => import('@/pages/page2'))
   },
   {
     path: '/dashboard/page3',
     roleItemKey: 'dashboard:page3',
+    name: 'page3',
     Component: lazy(() => import('@/pages/page3'))
   },
 ]
 
 
-const filterRoutes = (routes: CustomRouteObject[], menus: CustomObject[]) => {
-  return routes.filter(route => {
+export const filterRoutes = (menus: CustomObject[]) => {
+  return authRouterMaps.filter(route => {
     const menu = menus.find(menu => menu.roleItemKey === route.roleItemKey)
     return menu
   })
 }
 
 export const addRoutes = (router: any, menus: CustomObject[]) => {
-  // 获取菜单后动态添加路由
-  const children = filterRoutes(authRouterMaps , menus)
+  const children = filterRoutes(menus)
   // console.log('children', children)
   router.routes[1].children = children
 }

@@ -4,16 +4,13 @@ import { useAppContext } from '@/app-context';
 import { Loading } from '@/components/Loading';
 
 function Layout() {
-  const { menus, user } = useAppContext();
-
-  console.log('menus', {menus, user})
-
+  const { menus } = useAppContext();
 
   return (
     <div style={{ display: 'flex', gap: 20 }}>
       <ul>
-        {menus.map(menu => (
-          <li key={menu.route}><Link to={menu.route}>{menu.name}</Link></li>
+        {menus.map((menu, index) => (
+          <li key={index}><Link to={menu.path}>{menu.name}</Link></li>
         ))}
       </ul>
       <Suspense fallback={<Loading />}>

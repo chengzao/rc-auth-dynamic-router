@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { getUserInfo } from '@/services/user';
 import { useAppContext } from '@/app-context';
-import { addRoutes, router } from './router';
+import { addRoutes, filterRoutes, router } from './router';
 
 export function App() {
   const [loading, setLoading] = useState(true);
@@ -11,13 +11,14 @@ export function App() {
 
   const fetchData = () => {
     getUserInfo().then((res: any) => {
-      const menus = res.data.data || []
+      const data = res.data.data || []
+      const menus  = filterRoutes(data);
   
       setMenus(menus);
       setLoading(false);
 
-      addRoutes(router, menus);
-      
+      addRoutes(router, data);
+
     }).catch((err) => {
       console.log('fetch error', err)
       setLoading(false);
