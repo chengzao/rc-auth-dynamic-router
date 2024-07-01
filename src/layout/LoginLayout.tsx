@@ -4,10 +4,8 @@ import { Loading } from '@/components/Loading';
 
 function Layout() {
 
-  console.log('BaseLayout')
-
   return (
-    <div style={{ display: 'flex', gap: 20 }}>
+    <div className='login-layout'>
       <Suspense fallback={<Loading />}>
         <Outlet />
       </Suspense>

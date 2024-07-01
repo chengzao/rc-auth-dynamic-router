@@ -1,35 +1,85 @@
-import { useAppContext } from '@/app-context';
-import { fetchLogin } from '@/services/user';
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { Button, Form, Input } from "antd";
+import type { FormProps } from "antd";
+
+import { useAppContext } from "@/app-context";
+import { fetchLogin } from "@/services/user";
+
+import styles from './login.module.less'
+
+type FieldType = {
+  username?: string;
+  password?: string;
+};
+
 
 const Login = () => {
-  const [name, setName] = useState('')
-  const { setUser } = useAppContext()
+  const { setUser } = useAppContext();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  const handleSubmit = async (values: any) => {
+    fetchLogin(values)
+      .then((res: any) => {
+        localStorage.setItem("token", res.data.token);
+        // location.href = '/dashboard'
+      })
+      .then(() => {
+        setUser((pre: any) => ({ ...pre, user: values }));
+        navigate("/dashboard/page1", { replace: true });
+      })
+      .catch((err) => {
+        console.log("fetch error", err);
+      });
+  };
+
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    console.log('values', values)
+    handleSubmit(values)
+  };
   
-  const handleSubmit = async () => {
-    fetchLogin(name).then((res: any) => {
-      localStorage.setItem('token', res.data.token)
-      // location.href = '/dashboard'
-    })
-    .then(() => {
-      setUser((pre: any) => ({...pre, user:{name}}))
-      navigate('/dashboard/page1', { replace: true })
-    })
-    .catch((err) => {
-      console.log('fetch error', err)
-    })
-  }
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+    console.log("Failed:", errorInfo);
+  };
 
+  
   return (
-    <div>
-      <h1>login</h1>
-      <input type="text" value={name} onChange={e => setName(e.target.value)} />
-      <button onClick={handleSubmit}>登录</button>
-    </div>
-  )
-}
+    <div className={styles.login}>
+      <h1 className={styles.title}>KMS</h1>
+      <div className={styles.form}>
+        <Form
+          name="basic"
+          labelCol={{ flex: '126px' }}
+          style={{width: 500}}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[{ required: true, message: "Please input your username!" }]}
+          >
+            <Input size="large" style={{ width: 300}} />
+          </Form.Item>
 
-export default Login
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password size="large" style={{ width: 300}} />
+          </Form.Item>
+
+          <Form.Item wrapperCol={{ offset: 6 }}>
+            <Button type="primary" size="large" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+export default Login;

@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { useAppContext } from '@/app-context';
 import { Loading } from '@/components/Loading';
+import { Button } from 'antd';
 
 import styles from '@/layout.module.less'
 
@@ -23,7 +24,7 @@ function Layout() {
           ))}
         </ul>
         <div className={styles.footer}>
-          <button onClick={logout}>logout</button>
+          <Button type='link' onClick={logout}>logout</Button>
         </div>
       </nav>
       <main className={styles.main}>

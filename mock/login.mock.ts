@@ -5,10 +5,9 @@ export default defineMock({
   url: '/api/login',
   method: ['POST'],
   body(request) {
-    // console.log('request', request.body)
-    const { name } = request.body
+    const { username } = request.body
 
-    if(name==='admin') {
+    if(username==='admin') {
       return {
         token: 'admin'
       }

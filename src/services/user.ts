@@ -10,8 +10,8 @@ export const getUserInfo = () => {
   })
 }
 
-export const fetchLogin = (name: string) => {
-  return httpServer.post('/api/login', {name})
+export const fetchLogin = (payload: any) => {
+  return httpServer.post('/api/login', payload)
 }
 
 export const fetchList = () => {

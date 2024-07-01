@@ -11,8 +11,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-
-  background-color: aliceblue;
+  border-right: 1px solid #eee;
 
   ul,li{
     list-style: none;
@@ -28,18 +27,17 @@
 .nav a {
   display: block;
   color: #121212;
-  padding: 4px 6px;
+  padding: 8px 10px;
   border-radius: 4px;
   
   &:hover {
-    background-color: #1672f3;
-    color: #ffffff;
+    background-color: rgba(0, 0, 0, 0.06);
   }
 }
 
 .nav a.active {
-  background-color: #3451b2;
-  color: #ffffff;
+  background-color: #e6f4ff;
+  color: #1677ff;
 }
 
 .nav .header{
@@ -55,7 +53,7 @@
 }
 
 .nav .footer{
-  padding: 20px 12px;
+  padding: 12px;
   text-align: right;
   border-top: 1px solid #eee;
 }

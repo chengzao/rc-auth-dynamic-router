@@ -1,5 +1,7 @@
 // import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { ConfigProvider } from 'antd'
+
 import App from './App.tsx'
 import { AppProvider } from '@/app-context';
 import './index.css'
@@ -13,7 +15,9 @@ NProgress.configure({
 })
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <AppProvider>
-    <App />
-  </AppProvider>,
+  <ConfigProvider theme={{ cssVar: true }}>
+    <AppProvider>
+      <App />
+    </AppProvider>
+  </ConfigProvider>,
 )
