@@ -1,9 +1,4 @@
-import React, {
-  useState,
-  Dispatch,
-  SetStateAction,
-  createContext,
-} from "react";
+import React, { useReducer, Dispatch, createContext } from "react";
 
 interface AppState {
   menus: any[];
@@ -11,9 +6,13 @@ interface AppState {
 }
 
 interface AppContextProps extends AppState {
-  setUser: Dispatch<SetStateAction<any>>;
-  setMenus: Dispatch<SetStateAction<any[]>>;
+  dispatch: Dispatch<AppActions>;
 }
+
+// 定义action类型
+type AppActions =
+  | { type: "SET_USER"; payload: any }
+  | { type: "SET_MENUS"; payload: any[] };
 
 const initState: AppState = {
   menus: [],
@@ -27,19 +26,33 @@ interface AppProviderProps {
   value?: Partial<AppState>;
 }
 
+const appReducer = (state: AppState, action: AppActions): AppState => {
+  switch (action.type) {
+    case "SET_USER":
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case "SET_MENUS":
+      return {
+        ...state,
+        menus: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 export const AppProvider: React.FC<AppProviderProps> = ({
   children,
   value = {},
 }) => {
   const state = { ...initState, ...value };
-  const [user, setUser] = useState(state.user || {});
-  const [menus, setMenus] = useState(state.menus || []);
+  const [appState, dispatch] = useReducer(appReducer, state);
 
   const contextValue = {
-    user,
-    menus,
-    setUser,
-    setMenus,
+    ...appState,
+    dispatch,
   };
 
   return (

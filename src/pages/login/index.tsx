@@ -5,16 +5,15 @@ import type { FormProps } from "antd";
 import { useAppContext } from "@/app-context";
 import { fetchLogin } from "@/services/user";
 
-import styles from './login.module.less'
+import styles from "./login.module.less";
 
 type FieldType = {
   username?: string;
   password?: string;
 };
 
-
 const Login = () => {
-  const { setUser } = useAppContext();
+  const { dispatch } = useAppContext();
 
   const navigate = useNavigate();
 
@@ -25,7 +24,7 @@ const Login = () => {
         // location.href = '/dashboard'
       })
       .then(() => {
-        setUser((pre: any) => ({ ...pre, user: values }));
+        dispatch({ type: "SET_USER", payload: values });
         navigate("/dashboard/page1", { replace: true });
       })
       .catch((err) => {
@@ -34,15 +33,16 @@ const Login = () => {
   };
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    console.log('values', values)
-    handleSubmit(values)
+    console.log("values", values);
+    handleSubmit(values);
   };
-  
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
+
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
+    errorInfo
+  ) => {
     console.log("Failed:", errorInfo);
   };
 
-  
   return (
     <div className={styles.login}>
       <h1 className={styles.title}>KMS</h1>
@@ -69,7 +69,7 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password size="large"/>
+            <Input.Password size="large" />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
