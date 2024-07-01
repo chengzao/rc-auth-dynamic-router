@@ -12,18 +12,8 @@ $ pnpm install
 $ pnpm dev
 ```
 
-## dynamic router
+## user
 
-- normal: `user` - `123`
+test user: `user` - `123`
 
-```
-- page1
-```
-
-- admin: `admin` - `123`
-
-```
-- page1
-- page2
-- page3
-```
+admin user: `admin` - `123`
