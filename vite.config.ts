@@ -1,25 +1,23 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import mockDevServerPlugin from 'vite-plugin-mock-dev-server'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import mockDevServerPlugin from "vite-plugin-mock-dev-server";
+import path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    mockDevServerPlugin(),
-  ],
+  plugins: [react(), mockDevServerPlugin()],
   resolve: {
     alias: {
-      '@': '/src'
-    }
+      "@": path.resolve(__dirname, "./src"),
+    },
   },
   server: {
     proxy: {
-      '/api': {
-        target: '',
+      "/api": {
+        target: "",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      }
-    }
-  }
-})
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
+  },
+});
