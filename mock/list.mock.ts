@@ -1,12 +1,12 @@
-import { defineMock } from 'vite-plugin-mock-dev-server'
-
+import { defineMock } from "vite-plugin-mock-dev-server";
 
 export default defineMock({
-  url: '/api/list',
-  method: ['GET'],
+  url: "/api/list",
+  method: ["GET"],
   body() {
     return {
-      data: 'this is a list data'
-    }
+      code: 200,
+      data: "this is a list data",
+    };
   },
-})
+});

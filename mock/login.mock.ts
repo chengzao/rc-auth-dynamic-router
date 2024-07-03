@@ -1,20 +1,21 @@
-import { defineMock } from 'vite-plugin-mock-dev-server'
-
+import { defineMock } from "vite-plugin-mock-dev-server";
 
 export default defineMock({
-  url: '/api/login',
-  method: ['POST'],
+  url: "/api/login",
+  method: ["POST"],
   body(request) {
-    const { username } = request.body
+    const { username } = request.body;
 
-    if(username==='admin') {
+    if (username === "admin") {
       return {
-        token: 'admin'
-      }
+        code: 200,
+        token: "admin",
+      };
     }
 
     return {
-      token: 'user'
-    }
+      code: 200,
+      token: "user",
+    };
   },
-})
+});
