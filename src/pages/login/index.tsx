@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAppContext } from "@/app-context";
 import { fetchLogin } from "@/services/user";
 
-import styles from "./login.module.less";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 type FieldType = {
   username?: string;
@@ -55,35 +57,42 @@ const Login = () => {
   };
 
   return (
-    <div className={styles.login}>
-      <h1 className={styles.title}>KMS</h1>
-      <div className={styles.formWrapper}>
-        <form onSubmit={onSubmit} className={styles.form}>
-          <label htmlFor="username">
-            Username:{" "}
-            <input
-              type="text"
-              name="username"
-              placeholder="usr: admin or user"
-              value={formValues.username}
-              onChange={handleChange}
-            />
-          </label>
+    <div>
+      <form
+        onSubmit={onSubmit}
+        className="w-full h-screen flex items-center justify-center flex-col gap-4"
+      >
+        <h1 className="grid w-full max-w-sm items-center gap-1.5 text-3xl text-center">
+          Login
+        </h1>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="username">Username</Label>
+          <Input
+            id="username"
+            type="text"
+            name="username"
+            value={formValues.username}
+            onChange={handleChange}
+            placeholder="usr: admin or user"
+          />
+        </div>
 
-          <label htmlFor="password">
-            Password:{" "}
-            <input
-              type="password"
-              name="password"
-              placeholder="pwd: 123"
-              value={formValues.password}
-              onChange={handleChange}
-            />
-          </label>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label htmlFor="password">Password</Label>
+          <Input
+            id="password"
+            type="password"
+            name="password"
+            placeholder="pwd: 123"
+            value={formValues.password}
+            onChange={handleChange}
+          />
+        </div>
 
-          <input type="submit" value="Submit" />
-        </form>
-      </div>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Button type="submit">Submit</Button>
+        </div>
+      </form>
     </div>
   );
 };

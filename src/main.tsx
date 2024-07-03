@@ -3,7 +3,9 @@ import ReactDOM from "react-dom/client";
 
 import App from "./App.tsx";
 import { AppProvider } from "@/app-context";
+
 import "./index.css";
+import "./global.css";
 
 import NProgress from "nprogress";
 
