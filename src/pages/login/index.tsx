@@ -61,7 +61,7 @@ const Login = () => {
             name="username"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
-            <Input size="large" />
+            <Input size="large" placeholder="Username: admin or user" />
           </Form.Item>
 
           <Form.Item<FieldType>
@@ -69,7 +69,7 @@ const Login = () => {
             name="password"
             rules={[{ required: true, message: "Please input your password!" }]}
           >
-            <Input.Password size="large" />
+            <Input.Password size="large" placeholder="Password: 123" />
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
