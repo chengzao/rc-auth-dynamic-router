@@ -1,27 +1,16 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAppContext } from "@/app-context";
 import { Loading } from "@/components/NProgress";
-import { Modal } from "antd";
 
 import styles from "@/layout.module.less";
 
 function Layout() {
   const { menus } = useAppContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const logout = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
     localStorage.removeItem("token");
     window.location.reload();
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
   };
 
   return (
@@ -51,14 +40,6 @@ function Layout() {
           <Outlet />
         </Suspense>
       </main>
-      <Modal
-        title="退出"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleClose}
-      >
-        <p>请确认是否要退出登录?</p>
-      </Modal>
     </div>
   );
 }

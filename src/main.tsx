@@ -1,23 +1,20 @@
 // import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { ConfigProvider } from 'antd'
+import ReactDOM from "react-dom/client";
 
-import App from './App.tsx'
-import { AppProvider } from '@/app-context';
-import './index.css'
+import App from "./App.tsx";
+import { AppProvider } from "@/app-context";
+import "./index.css";
 
-import NProgress from 'nprogress';
+import NProgress from "nprogress";
 
-import 'nprogress/nprogress.css';
+import "nprogress/nprogress.css";
 
 NProgress.configure({
-  showSpinner: false
-})
+  showSpinner: false,
+});
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <ConfigProvider>
-    <AppProvider>
-      <App />
-    </AppProvider>
-  </ConfigProvider>,
-)
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <AppProvider>
+    <App />
+  </AppProvider>
+);

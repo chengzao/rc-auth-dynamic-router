@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
-import type { FormProps } from "antd";
 
 import { useAppContext } from "@/app-context";
 import { fetchLogin } from "@/services/user";
 
 import styles from "./login.module.less";
+import { useState } from "react";
 
 type FieldType = {
   username?: string;
@@ -14,6 +13,10 @@ type FieldType = {
 
 const Login = () => {
   const { dispatch } = useAppContext();
+  const [formValues, setFormValues] = useState<FieldType>({
+    username: "",
+    password: "",
+  });
 
   const navigate = useNavigate();
 
@@ -32,52 +35,54 @@ const Login = () => {
       });
   };
 
-  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    console.log("values", values);
-    handleSubmit(values);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log("Form submitted:", formValues);
+    // 你可以在此处执行任何进一步的处理，例如表单验证、API调用等
+    if (!formValues.username || !formValues.password) {
+      return;
+    }
+
+    handleSubmit(formValues);
   };
 
   return (
     <div className={styles.login}>
       <h1 className={styles.title}>KMS</h1>
-      <div className={styles.form}>
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ width: 500 }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item<FieldType>
-            label="Username"
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
-          >
-            <Input size="large" placeholder="Username: admin or user" />
-          </Form.Item>
+      <div className={styles.formWrapper}>
+        <form onSubmit={onSubmit} className={styles.form}>
+          <label htmlFor="username">
+            Username:{" "}
+            <input
+              type="text"
+              name="username"
+              placeholder="usr: admin or user"
+              value={formValues.username}
+              onChange={handleChange}
+            />
+          </label>
 
-          <Form.Item<FieldType>
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <Input.Password size="large" placeholder="Password: 123" />
-          </Form.Item>
+          <label htmlFor="password">
+            Password:{" "}
+            <input
+              type="password"
+              name="password"
+              placeholder="pwd: 123"
+              value={formValues.password}
+              onChange={handleChange}
+            />
+          </label>
 
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" size="large" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     </div>
   );
