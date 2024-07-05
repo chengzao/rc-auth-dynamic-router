@@ -69,3 +69,16 @@ export const useAppContext = () => {
 
   return context;
 };
+
+export const withAppProvider = <P extends object>(
+  WrappedComponent: React.ComponentType<P>,
+  extraProps?: P
+) => {
+  return function AppProviderComponent(props: P) {
+    return (
+      <AppProvider>
+        <WrappedComponent {...props} {...extraProps} />
+      </AppProvider>
+    );
+  };
+};
