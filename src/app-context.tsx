@@ -9,7 +9,6 @@ interface AppContextProps extends AppState {
   dispatch: Dispatch<AppActions>;
 }
 
-// 定义action类型
 type AppActions =
   | { type: "SET_USER"; payload: any }
   | { type: "SET_MENUS"; payload: any[] };
