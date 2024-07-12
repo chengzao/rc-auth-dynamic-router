@@ -14,7 +14,7 @@ function Layout() {
 
   return (
     <div className="flex h-screen w-full">
-      <aside className="flex h-full flex-col border-r flex-shrink-0">
+      <aside className="flex h-full flex-col border-r flex-shrink-0 min-w-48">
         <section className="mb-2 border-b p-4">
           <h1>KMS DashBoard</h1>
         </section>
@@ -37,8 +37,10 @@ function Layout() {
             ))}
           </ul>
         </nav>
-        <section className="mt-auto border-t p-3">
-          <div onClick={logout}>logout</div>
+        <section className="mt-auto border-t p-3 text-right">
+          <span onClick={logout} className="cursor-pointer text-red-600">
+            logout
+          </span>
         </section>
       </aside>
       <main className="flex flex-col flex-1 pl-5">
