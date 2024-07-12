@@ -2,8 +2,7 @@ import { Suspense } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { useAppContext } from "@/app-context";
 import { Loading } from "@/components/NProgress";
-
-import styles from "@/layout.module.less";
+import { cn } from "@/lib/utils";
 
 function Layout() {
   const { menus } = useAppContext();
@@ -14,28 +13,35 @@ function Layout() {
   };
 
   return (
-    <div className={styles.layout}>
-      <nav className={styles.nav}>
-        <h1 className={styles.header}>KMS DashBoard</h1>
-        <ul className={styles.container}>
-          {menus.map((menu, index) => (
-            <li key={index}>
-              <NavLink
-                to={menu.path}
-                className={({ isActive }) => (isActive ? styles.active : "")}
-              >
-                {menu.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-        <div className={styles.footer}>
-          <div className={styles.logout} onClick={logout}>
-            logout
-          </div>
-        </div>
-      </nav>
-      <main className={styles.main}>
+    <div className="flex h-screen w-full">
+      <aside className="flex h-full flex-col border-r flex-shrink-0">
+        <section className="mb-2 border-b p-4">
+          <h1>KMS DashBoard</h1>
+        </section>
+        <nav className="flex-1 overflow-auto my-3">
+          <ul>
+            {menus.map((menu, index) => (
+              <li key={index} className="px-3 py-1">
+                <NavLink
+                  to={menu.path}
+                  className={({ isActive }) =>
+                    cn(
+                      "block rounded p-1 hover:bg-[rgba(0,0,0,0.06)]",
+                      isActive ? "active bg-[#e6f4ff] text-[#1677ff]" : ""
+                    )
+                  }
+                >
+                  {menu.name}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <section className="mt-auto border-t p-3">
+          <div onClick={logout}>logout</div>
+        </section>
+      </aside>
+      <main className="flex flex-col flex-1 pl-5">
         <Suspense fallback={<Loading />}>
           <Outlet />
         </Suspense>
